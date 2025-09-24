@@ -646,7 +646,7 @@ function apagarValoresErrors() {
 			var cookie = $("#cookie-input-1").val().trim();
 			if (cookie) {
 				$.ajax({
-					url: 'apiv2.php',
+					url: 'apiv.php',
 					type: 'GET',
 					data: { validate_cookie: cookie, token_api: token_api },
 					success: function(response) {
