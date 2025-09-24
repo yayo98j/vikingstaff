@@ -19,10 +19,11 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
  */
 function require_login() {
     if (empty($_SESSION['user_id'])) {
-        header('Location: /vikingstaff/index.html?err=login_required');
+        header('Location: /vikingstaff/index.php?err=login_required');
         exit;
     }
 }
+
 
 
 
