@@ -38,4 +38,4 @@ You can vote for upcoming projects on our channel **community** page :wink:
 
 # Author
 
-SortedCoding
+Yayo William y fer
