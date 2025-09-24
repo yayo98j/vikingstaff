@@ -1,9 +1,3 @@
-
-<script type="text/javascript">
-	var custo = "0";
-	var descricao_chk = "Checker AMAZON US";
-	var audio = new Audio('live.mp3');
-</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -220,34 +214,89 @@
 			padding-bottom: 15px;
 			margin-bottom: 10px;
 		}
+		
+		/* Botón de idioma */
+		.language-selector {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			z-index: 1000;
+		}
+		
+		.language-btn {
+			background: linear-gradient(135deg, #2a2f4a 0%, #3a3f5c 100%);
+			border: 1px solid #4a4f73;
+			color: #b8c1ec;
+			font-size: 0.9rem;
+			padding: 5px 10px;
+		}
+		
+		.language-btn:hover {
+			background: linear-gradient(135deg, #3a3f5c 0%, #4a4f73 100%);
+			color: #e0e0e0;
+		}
+		
+		.language-dropdown {
+			background: #1e2235;
+			border: 1px solid #4a4f73;
+			border-radius: 6px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		}
+		
+		.language-option {
+			color: #e0e0e0;
+			padding: 8px 15px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		
+		.language-option:hover {
+			background: rgba(120, 119, 198, 0.1);
+		}
+		
+		.language-option.active {
+			background: linear-gradient(135deg, #7877c6 0%, #5a58b9 100%);
+			color: #ffffff;
+		}
 	</style>
 </head>
 <body class="p-3">
     
     <input type="hidden" value="<?php echo $base64Value; ?>" name="token_api" id="token_api">
 	
+	<!-- Selector de idioma -->
+	<div class="language-selector">
+		<button class="btn language-btn" id="languageToggle">
+			<i class="fas fa-language"></i> <span id="currentLanguage">ES</span> <i class="fas fa-chevron-down"></i>
+		</button>
+		<div class="language-dropdown mt-1" id="languageDropdown" style="display: none;">
+			<div class="language-option active" data-lang="es">Español</div>
+			<div class="language-option" data-lang="en">English</div>
+		</div>
+	</div>
+	
 	<!-- Header Principal -->
 	<div class="container text-white rounded shadow p-3 my-4">
 		<div class="header-container">
 			<h3><i class="fas fa-shield-alt"></i> CHECKER VIKING STAFF AMAZON US</h3>
 			<div class="text-center mt-2">
-				<small class="text-muted">Sistema de verificación de tarjetas</small>
+				<small class="text-muted" data-i18n="system_description">Sistema de verificación de tarjetas</small>
 			</div>
 		</div>
 		
 		<!-- botoes de ação -->
 		<div class="container-fluid mt-3">
 			<div class="buttons text-center">
-				<button class="btn mr-2" id="chk-start"><i class="fas fa-play"></i> Iniciar</button>
-				<button class="btn mr-2" id="chk-pause" disabled><i class="fas fa-pause"></i> Pausar</button>
-				<button class="btn mr-2" id="chk-stop" disabled><i class="fas fa-stop"></i> Parar</button>
-				<button class="btn" id="chk-clean"><i class="fas fa-trash-alt"></i> Limpar</button>
+				<button class="btn mr-2" id="chk-start"><i class="fas fa-play"></i> <span data-i18n="start">Iniciar</span></button>
+				<button class="btn mr-2" id="chk-pause" disabled><i class="fas fa-pause"></i> <span data-i18n="pause">Pausar</span></button>
+				<button class="btn mr-2" id="chk-stop" disabled><i class="fas fa-stop"></i> <span data-i18n="stop">Parar</span></button>
+				<button class="btn" id="chk-clean"><i class="fas fa-trash-alt"></i> <span data-i18n="clean">Limpar</span></button>
 			</div>
 		</div>
 		
 		<!-- status do checker -->
 		<div class="container-fluid mt-3 text-center">
-			<span class="badge badge-warning" id="estatus">Aguardando inicio...</span>
+			<span class="badge badge-warning" id="estatus" data-i18n="waiting_start">Aguardando inicio...</span>
 		</div>
 	</div>
 
@@ -256,22 +305,22 @@
 		<ul class="nav nav-tabs" id="myTab" role="tablist" style="border: none;">
 			<li class="nav-item">
 				<a class="nav-link active" style="border: none;" id="home-tab" data-toggle="tab" href="#chk-home" role="tab" aria-controls="home" aria-selected="true">
-					<i class="far fa-credit-card"></i> Checker
+					<i class="far fa-credit-card"></i> <span data-i18n="checker">Checker</span>
 				</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" style="border: none;" id="profile-tab" data-toggle="tab" href="#chk-lives" role="tab" aria-controls="profile" aria-selected="false">
-					<i class="fa fa-thumbs-up fa-lg"></i> Aprovadas
+					<i class="fa fa-thumbs-up fa-lg"></i> <span data-i18n="approved">Aprobadas</span>
 				</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" style="border: none;" id="contact-tab" data-toggle="tab" href="#chk-dies" role="tab" aria-controls="contact" aria-selected="false">
-					<i class="fa fa-thumbs-down fa-lg"></i> Reprovadas
+					<i class="fa fa-thumbs-down fa-lg"></i> <span data-i18n="rejected">Reprobadas</span>
 				</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" style="border: none;" id="contact-tab" data-toggle="tab" href="#chk-errors" role="tab" aria-controls="contact" aria-selected="false">
-					<i class="fas fa-times fa-lg"></i> Erros
+					<i class="fas fa-times fa-lg"></i> <span data-i18n="errors">Errores</span>
 				</a>
 			</li>
 		</ul>
@@ -282,35 +331,35 @@
 				<div class="my-3 p-3" style="background: #15182b; border-radius: 6px;">
 					<div class="row text-center">
 						<div class="col">
-							<small>Aprovadas</small><br>
+							<small data-i18n="approved">Aprobadas</small><br>
 							<span class="val-lives">0</span>
 						</div>
 						<div class="col">
-							<small>Reprovadas</small><br>
+							<small data-i18n="rejected">Reprobadas</small><br>
 							<span class="val-dies">0</span>
 						</div>
 						<div class="col">
-							<small>Errors</small><br>
+							<small data-i18n="errors">Errores</small><br>
 							<span class="val-errors">0</span>
 						</div>
 						<div class="col">
-							<small>Testadas</small><br>
+							<small data-i18n="tested">Testeadas</small><br>
 							<span class="val-tested">0</span>
 						</div>
 						<div class="col">
-							<small>Total</small><br>
+							<small data-i18n="total">Total</small><br>
 							<span class="val-total">0</span>
 						</div>
 					</div>
 				</div>
 				
 				<div class="container-fluid p-0 mt-3">
-					<label class="text-light mb-2"><i class="fas fa-cookie"></i> Cookie Amazon.com</label>
+					<label class="text-light mb-2"><i class="fas fa-cookie"></i> <span data-i18n="cookie_amazon">Cookie Amazon.com</span></label>
 					<input type="text" id="cookie-input-1" placeholder="Cookie Amazon.com (session-token)" class="cookie-input rounded shadow p-3">
 				</div>
 				
 				<div class="container-fluid p-0 mt-3">
-					<label class="text-light mb-2"><i class="fas fa-credit-card"></i> Lista de Cartas</label>
+					<label class="text-light mb-2"><i class="fas fa-credit-card"></i> <span data-i18n="card_list">Lista de Cartas</span></label>
 					<textarea id="lista_cartoes" placeholder="Insira sua lista no formato: NÚMERO|MES|ANO|CVV" rows="10" class="rounded shadow"></textarea>
 				</div>
 			</div>
@@ -325,11 +374,11 @@ function apagarValoresLives() {
 			<!-- LIVES DO CHECKERS -->
 			<div class="tab-pane fade show" id="chk-lives" role="tabpanel" aria-labelledby="home-tab">
 				<div class="d-flex justify-content-between align-items-center mb-3">
-					<h5 class="mb-0"><i class="fas fa-check-circle text-success"></i> Aprovadas</h5>
+					<h5 class="mb-0"><i class="fas fa-check-circle text-success"></i> <span data-i18n="approved">Aprobadas</span></h5>
 					<div>
-						<span class="text-light">Total: <span class="val-lives">0</span></span>
-						<button class="btn ml-2" id="copyButton"><i class="fas fa-copy"></i> Copiar</button>
-						<button class="btn ml-2" onclick="apagarValoresLives()"><i class="fas fa-trash-alt"></i> Limpar</button>
+						<span class="text-light" data-i18n="total">Total: <span class="val-lives">0</span></span>
+						<button class="btn ml-2" id="copyButton"><i class="fas fa-copy"></i> <span data-i18n="copy">Copiar</span></button>
+						<button class="btn ml-2" onclick="apagarValoresLives()"><i class="fas fa-trash-alt"></i> <span data-i18n="clean">Limpiar</span></button>
 					</div>
 				</div>
 				<div id="lives" style="overflow:auto;">
@@ -376,10 +425,10 @@ function apagarValoresErrors() {
 			<!-- DIES DO CHECKER -->
 			<div class="tab-pane fade fade show" id="chk-dies" role="tabpanel" aria-labelledby="home-tab">
 				<div class="d-flex justify-content-between align-items-center mb-3">
-					<h5 class="mb-0"><i class="fas fa-times-circle text-danger"></i> Reprovadas</h5>
+					<h5 class="mb-0"><i class="fas fa-times-circle text-danger"></i> <span data-i18n="rejected">Reprobadas</span></h5>
 					<div>
-						<span class="text-light">Total: <span class="val-dies">0</span></span>
-						<button class="btn ml-2" onclick="apagarValoresDies()"><i class="fas fa-trash-alt"></i> Limpar</button>
+						<span class="text-light" data-i18n="total">Total: <span class="val-dies">0</span></span>
+						<button class="btn ml-2" onclick="apagarValoresDies()"><i class="fas fa-trash-alt"></i> <span data-i18n="clean">Limpiar</span></button>
 					</div>
 				</div>
 				<div id="dies" style="overflow:auto;">
@@ -389,10 +438,10 @@ function apagarValoresErrors() {
 			<!-- ERRORS DO CHECKER -->
 			<div class="tab-pane fade show" id="chk-errors" role="tabpanel" aria-labelledby="home-tab">
 				<div class="d-flex justify-content-between align-items-center mb-3">
-					<h5 class="mb-0"><i class="fas fa-exclamation-triangle text-warning"></i> Erros</h5>
+					<h5 class="mb-0"><i class="fas fa-exclamation-triangle text-warning"></i> <span data-i18n="errors">Errores</span></h5>
 					<div>
-						<span class="text-light">Total: <span class="val-errors">0</span></span>
-						<button class="btn ml-2" onclick="apagarValoresErrors()"><i class="fas fa-trash-alt"></i> Limpar</button>
+						<span class="text-light" data-i18n="total">Total: <span class="val-errors">0</span></span>
+						<button class="btn ml-2" onclick="apagarValoresErrors()"><i class="fas fa-trash-alt"></i> <span data-i18n="clean">Limpiar</span></button>
 					</div>
 				</div>
 				<div id="errors" style="overflow:auto;">
@@ -422,6 +471,134 @@ function apagarValoresErrors() {
 		};
 	</script>
 
+	<!-- Sistema de traducción -->
+	<script>
+		// Definir las traducciones
+		const translations = {
+			es: {
+				// Textos de interfaz
+				"system_description": "Sistema de verificación de tarjetas",
+				"start": "Iniciar",
+				"pause": "Pausar",
+				"stop": "Parar",
+				"clean": "Limpiar",
+				"waiting_start": "Esperando inicio...",
+				"checker": "Checker",
+				"approved": "Aprobadas",
+				"rejected": "Reprobadas",
+				"errors": "Errores",
+				"tested": "Testeadas",
+				"total": "Total",
+				"cookie_amazon": "Cookie Amazon.com",
+				"card_list": "Lista de Cartas",
+				"copy": "Copiar",
+				
+				// Mensajes del sistema
+				"insert_card_list": "¡Inserta la lista de cartas!",
+				"insert_cookie": "¡Inserta el cookie Amazon.com!",
+				"checker_started": "Checker Iniciado.",
+				"checker_paused": "Checker Pausado!",
+				"checker_stopped": "Checker Parado!",
+				"checker_cleaned": "Checker Limpiado!",
+				"test_completed": "Test de {total} ítems completado",
+				"approved_card": "¡Aprobada! {card}",
+				"rejected_card": "¡Reprobada! {card}",
+				"error_card": "¡Ocurrió un error! {card}",
+				"retrying": "Reintentando... ({attempt}/3)",
+				"copy_success": "¡Copiado al portapapeles!",
+				"copy_error": "Error al copiar"
+			},
+			en: {
+				// Textos de interfaz
+				"system_description": "Card verification system",
+				"start": "Start",
+				"pause": "Pause",
+				"stop": "Stop",
+				"clean": "Clean",
+				"waiting_start": "Waiting to start...",
+				"checker": "Checker",
+				"approved": "Approved",
+				"rejected": "Rejected",
+				"errors": "Errors",
+				"tested": "Tested",
+				"total": "Total",
+				"cookie_amazon": "Cookie Amazon.com",
+				"card_list": "Card List",
+				"copy": "Copy",
+				
+				// Mensajes del sistema
+				"insert_card_list": "Insert the card list!",
+				"insert_cookie": "Insert the Amazon.com cookie!",
+				"checker_started": "Checker Started.",
+				"checker_paused": "Checker Paused!",
+				"checker_stopped": "Checker Stopped!",
+				"checker_cleaned": "Checker Cleaned!",
+				"test_completed": "Test of {total} items completed",
+				"approved_card": "Approved! {card}",
+				"rejected_card": "Rejected! {card}",
+				"error_card": "An error occurred! {card}",
+				"retrying": "Retrying... ({attempt}/3)",
+				"copy_success": "Copied to clipboard!",
+				"copy_error": "Error copying"
+			}
+		};
+
+		// Función para cambiar el idioma
+		function changeLanguage(lang) {
+			// Actualizar todos los elementos con data-i18n
+			document.querySelectorAll('[data-i18n]').forEach(element => {
+				const key = element.getAttribute('data-i18n');
+				if (translations[lang] && translations[lang][key]) {
+					element.textContent = translations[lang][key];
+				}
+			});
+			
+			// Actualizar el botón de idioma
+			document.getElementById('currentLanguage').textContent = lang.toUpperCase();
+			
+			// Actualizar las opciones activas
+			document.querySelectorAll('.language-option').forEach(option => {
+				if (option.getAttribute('data-lang') === lang) {
+					option.classList.add('active');
+				} else {
+					option.classList.remove('active');
+				}
+			});
+			
+			// Guardar preferencia
+			localStorage.setItem('preferredLanguage', lang);
+		}
+
+		// Inicializar el sistema de idiomas
+		document.addEventListener('DOMContentLoaded', function() {
+			// Obtener el idioma guardado o usar español por defecto
+			const savedLang = localStorage.getItem('preferredLanguage') || 'es';
+			changeLanguage(savedLang);
+			
+			// Configurar el menú desplegable de idiomas
+			document.getElementById('languageToggle').addEventListener('click', function() {
+				const dropdown = document.getElementById('languageDropdown');
+				dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+			});
+			
+			// Configurar las opciones de idioma
+			document.querySelectorAll('.language-option').forEach(option => {
+				option.addEventListener('click', function() {
+					const lang = this.getAttribute('data-lang');
+					changeLanguage(lang);
+					document.getElementById('languageDropdown').style.display = 'none';
+				});
+			});
+			
+			// Cerrar el menú al hacer clic fuera
+			document.addEventListener('click', function(event) {
+				if (!event.target.closest('.language-selector')) {
+					document.getElementById('languageDropdown').style.display = 'none';
+				}
+			});
+		});
+	</script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		// variaveis de informação
@@ -434,6 +611,19 @@ function apagarValoresErrors() {
 		var stopped = true;
 		var paused = true;
         var token_api = document.getElementById("token_api").value;
+
+		// Obtener función de traducción
+		function t(key, params = {}) {
+			const lang = localStorage.getItem('preferredLanguage') || 'es';
+			let text = translations[lang] && translations[lang][key] ? translations[lang][key] : key;
+			
+			// Reemplazar parámetros
+			for (const [param, value] of Object.entries(params)) {
+				text = text.replace(`{${param}}`, value);
+			}
+			
+			return text;
+		}
 
 		function removelinha() {
 			var lines = $("textarea").val().split('\n');
@@ -453,7 +643,7 @@ function apagarValoresErrors() {
 		    if (tested >= total) {
 		        console.log('finalizado ' + tested + " de " + total);
 		        $("#estatus").attr("class", "badge badge-success").text("Teste finalizado");
-		        toastr["success"]("Teste de " + total + " itens finalizado");
+		        toastr["success"](t("test_completed", {total: total}));
 		        $("#chk-start").removeAttr('disabled');
 		        $("#chk-clean").removeAttr('disabled');
 		        $("#chk-stop").attr("disabled", "true");
@@ -466,8 +656,8 @@ function apagarValoresErrors() {
 		    var cookie1 = $("#cookie-input-1").val().trim();
 
 		    if (!cookie1) {
-		        $("#estatus").attr("class", "badge badge-danger").text("Nenhum cookie fornecido!");
-		        toastr["error"]("Insira um cookie Amazon.com!");
+		        $("#estatus").attr("class", "badge badge-danger").text(t("insert_cookie"));
+		        toastr["error"](t("insert_cookie"));
 		        return false;
 		    }
 
@@ -491,8 +681,8 @@ function apagarValoresErrors() {
 
 		    function retry() {
 		        if (tentativas > 0) {
-		            $("#estatus").attr("class", "badge badge-warning").text("Tentando novamente... (" + (4 - tentativas) + "/3)");
-		            toastr["warning"]("Tentando novamente para: " + conteudo);
+		            $("#estatus").attr("class", "badge badge-warning").text(t("retrying", {attempt: 4 - tentativas}));
+		            toastr["warning"](t("retrying", {attempt: 4 - tentativas}) + ": " + conteudo);
 		            setTimeout(function() {
 		                testar(tested, total, lista, tentativas - 1);
 		            }, 1000);
@@ -507,19 +697,19 @@ function apagarValoresErrors() {
 		        if (response.indexOf("Aprovada") >= 0) {
 		            lives++;
 		            $("#estatus").attr("class", "badge badge-success").text(conteudo + " -> LIVE");
-		            toastr["success"]("Aprovada! " + conteudo);
+		            toastr["success"](t("approved_card", {card: conteudo}));
 		            $("#lives").append('<div class="p-2 mb-2 rounded" style="background: rgba(129, 199, 132, 0.1); border-left: 4px solid #81c784;">' + response + '</div>');
 		            removelinha();
 		        } else if (response.indexOf("Reprovada") >= 0) {
 		            dies++;
 		            $("#estatus").attr("class", "badge badge-danger").text(conteudo + " -> DIE");
-		            toastr["error"]("Reprovada! " + conteudo);
+		            toastr["error"](t("rejected_card", {card: conteudo}));
 		            $("#dies").append('<div class="p-2 mb-2 rounded" style="background: rgba(229, 115, 115, 0.1); border-left: 4px solid #e57373;">' + response + '</div>');
 		            removelinha();
 		        } else {
 		            errors++;
 		            $("#estatus").attr("class", "badge badge-warning").text(conteudo + " -> ERROR");
-		            toastr["warning"]("Ocorreu um erro! " + conteudo);
+		            toastr["warning"](t("error_card", {card: conteudo}));
 		            $("#errors").append('<div class="p-2 mb-2 rounded" style="background: rgba(255, 183, 77, 0.1); border-left: 4px solid #ffb74d;">' + response + '</div>');
 		        }
 
@@ -537,7 +727,7 @@ function apagarValoresErrors() {
 		    function handleRetryFailure() {
 		        errors++;
 		        $("#estatus").attr("class", "badge badge-warning").text(conteudo + " -> ERROR");
-		        toastr["warning"]("Ocorreu um erro! " + conteudo);
+		        toastr["warning"](t("error_card", {card: conteudo}));
 		        $("#errors").append('<div class="p-2 mb-2 rounded" style="background: rgba(255, 183, 77, 0.1); border-left: 4px solid #ffb74d;">Erro na tentativa de teste: ' + conteudo + '</div>');
 		        
 		        $(".val-total").text(total);
@@ -547,74 +737,81 @@ function apagarValoresErrors() {
 		        $(".val-tested").text(tested);
 		        
 		        removelinha();
-		        testar(tested + 1, total, lista);
+		        testar(tested, total, lista);
 		    }
 		}
 
-		// ========== START ========== //
-		function start() {
-			var lista = $("textarea").val().trim().split('\n');
-			var total = lista.length;
+		// iniciar checker
+		$("#chk-start").click(function() {
+			var lista = $("#lista_cartoes").val().split('\n');
+			var cookie1 = $("#cookie-input-1").val();
 
+			if (lista == "") {
+				$("#estatus").attr("class", "badge badge-danger").text(t("insert_card_list"));
+				toastr["error"](t("insert_card_list"));
+				return false;
+			}
+
+			if (cookie1 == "") {
+				$("#estatus").attr("class", "badge badge-danger").text(t("insert_cookie"));
+				toastr["error"](t("insert_cookie"));
+				return false;
+			}
+
+			total = lista.length;
 			$(".val-total").text(total);
+			$("#estatus").attr("class", "badge badge-success").text(t("checker_started"));
+			toastr["success"](t("checker_started"));
 			stopped = false;
 			paused = false;
-			toastr["success"]("Checker Iniciado.");
-			$("#estatus").attr("class", "badge badge-success").text("Checker iniciado, aguarde...");
-
-			// Libera os botões
-			$("#chk-stop").removeAttr('disabled');
-			$("#chk-pause").removeAttr('disabled');
 			$("#chk-start").attr("disabled", "true");
 			$("#chk-clean").attr("disabled", "true");
-
-			// Inicia o teste
+			$("#chk-stop").removeAttr('disabled');
+			$("#chk-pause").removeAttr('disabled');
 			testar(tested, total, lista);
-		}
+		});
 
-		$("#chk-start").click(function() {
-			if ($('textarea').val().trim() == "") {
-				$('textarea').focus();
-				toastr["warning"]("Insira a lista de cartões!");
-			} else if ($('#cookie-input-1').val().trim() == "") {
-				$('#cookie-input-1').focus();
-				toastr["warning"]("Insira o cookie Amazon.com!");
+		// pausar checker
+		$("#chk-pause").click(function() {
+			if (paused == false) {
+				paused = true;
+				$("#estatus").attr("class", "badge badge-warning").text(t("checker_paused"));
+				toastr["warning"](t("checker_paused"));
+				$("#chk-pause").html('<i class="fas fa-play"></i> ' + t("resume"));
 			} else {
-				start();
+				paused = false;
+				$("#estatus").attr("class", "badge badge-success").text("Checker Rodando...");
+				toastr["success"]("Checker Rodando...");
+				$("#chk-pause").html('<i class="fas fa-pause"></i> ' + t("pause"));
+				var lista = $("#lista_cartoes").val().split('\n');
+				testar(tested, total, lista);
 			}
 		});
 
-		// ========== PAUSE ========== //
-		function pause() {
-			$("#chk-start").removeAttr('disabled');
-			$("#chk-pause").attr("disabled", "true");
-			paused = true;
-			console.log('checker pausado');
-			toastr["info"]("Checker Pausado!");
-			$("#estatus").attr("class", "badge badge-info").text("Checker pausado...");
-		}
-
-		$("#chk-pause").click(function() {
-			pause();
-		});
-
-		// ========== STOP ========== //
-		function stop() {
+		// parar checker
+		$("#chk-stop").click(function() {
 			stopped = true;
+			paused = true;
+			$("#estatus").attr("class", "badge badge-danger").text(t("checker_stopped"));
+			toastr["error"](t("checker_stopped"));
 			$("#chk-start").removeAttr('disabled');
 			$("#chk-clean").removeAttr('disabled');
 			$("#chk-stop").attr("disabled", "true");
 			$("#chk-pause").attr("disabled", "true");
-			console.log('checker parado');
-			toastr["info"]("Checker Parado!");
-			$("#estatus").attr("class", "badge badge-secondary").text("Checker parado...");
-		}
-
-		$("#chk-stop").click(function() {
-			stop();
 		});
-	// ========== CLEAN ========== //
-		function clean() {
+
+		// limpar checker
+		$("#chk-clean").click(function() {
+			$("#estatus").attr("class", "badge badge-warning").text(t("checker_cleaned"));
+			toastr["success"](t("checker_cleaned"));
+			$("#lives").html("");
+			$("#dies").html("");
+			$("#errors").html("");
+			$(".val-total").text("0");
+			$(".val-lives").text("0");
+			$(".val-dies").text("0");
+			$(".val-errors").text("0");
+			$(".val-tested").text("0");
 			testadas = [];
 			total = 0;
 			tested = 0;
@@ -622,51 +819,9 @@ function apagarValoresErrors() {
 			dies = 0;
 			errors = 0;
 			stopped = true;
-
-			// atualiza resultados
-			$(".val-total").text(total);
-			$(".val-lives").text(lives);
-			$(".val-dies").text(dies);
-			$(".val-errors").text(errors);
-			$(".val-tested").text(tested);
-			$("textarea").val("");
-			$("#cookie-input-1").val("");
-			$("#lives").html("");
-			$("#dies").html("");
-			$("#errors").html("");
-			toastr["info"]("Checker Limpo!");
-		}
-
-		$("#chk-clean").click(function() {
-			clean();
-		});
-
-		// Validação do cookie
-		$("#validate-cookie-1").click(function() {
-			var cookie = $("#cookie-input-1").val().trim();
-			if (cookie) {
-				$.ajax({
-					url: 'apiv2.php',
-					type: 'GET',
-					data: { validate_cookie: cookie, token_api: token_api },
-					success: function(response) {
-						if (response.includes("Cookie ativo")) {
-							toastr["success"]("Cookie válido e ativo");
-						} else {
-							toastr["error"]("Cookie inválido ou inativo");
-						}
-					},
-					error: function() {
-						toastr["error"]("Erro na validação do cookie");
-					}
-				});
-			} else {
-				toastr["warning"]("Insira um cookie para validar!");
-			}
+			paused = true;
 		});
 	});
 </script>
-
 </body>
 </html>
-
