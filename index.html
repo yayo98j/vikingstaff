@@ -1,36 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Formulario de Inicio de Sesión</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+    <style>
+        .lang-selector {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Selector de idioma -->
+    <div class="lang-selector">
+        <select id="language">
+            <option value="es" selected>Español</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+
     <div class="wrapper">
         <form action="">
-            <h1>Login</h1>
+            <h1 data-i18n="title">Iniciar Sesión</h1>
             <div class="input-box">
-                <input type="text" placeholder="username">
+                <input type="text" placeholder="Usuario" data-i18n-placeholder="username">
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password">
+                <input type="password" placeholder="Contraseña" data-i18n-placeholder="password">
                 <i class='bx bxs-lock-alt'></i>
             </div>
             <div class="remember-forget">
-                <label ><input type="checkbox" >
-                Remember me</label>
-                <a href="#"> Forgot Password?</a>
+                <label><input type="checkbox"> <span data-i18n="remember">Recuérdame</span></label>
+                <a href="#" data-i18n="forgot">¿Olvidaste tu contraseña?</a>
             </div>
-            <button type="submit" class="btn">Log in</button>
+            <button type="submit" class="btn" data-i18n="login">Iniciar Sesión</button>
             <div class="register-link">
-                <p>Don't have a account?  <a href="#">Register</a></p>
+                <p data-i18n="noaccount">¿No tienes cuenta? <a href="#" data-i18n="register">Regístrate</a></p>
             </div>
         </form>
     </div>
-    
+
+    <script>
+        const translations = {
+            es: {
+                title: "Iniciar Sesión",
+                username: "Usuario",
+                password: "Contraseña",
+                remember: "Recuérdame",
+                forgot: "¿Olvidaste tu contraseña?",
+                login: "Iniciar Sesión",
+                noaccount: "¿No tienes cuenta?",
+                register: "Regístrate"
+            },
+            en: {
+                title: "Login",
+                username: "Username",
+                password: "Password",
+                remember: "Remember me",
+                forgot: "Forgot Password?",
+                login: "Log in",
+                noaccount: "Don't have an account?",
+                register: "Register"
+            }
+        };
+
+        const select = document.getElementById("language");
+        const elements = document.querySelectorAll("[data-i18n], [data-i18n-placeholder]");
+
+        function updateLanguage(lang) {
+            elements.forEach(el => {
+                if (el.dataset.i18n) {
+                    el.textContent = translations[lang][el.dataset.i18n];
+                }
+                if (el.dataset.i18nPlaceholder) {
+                    el.placeholder = translations[lang][el.dataset.i18nPlaceholder];
+                }
+            });
+        }
+
+        // Inicializar en español
+        updateLanguage("es");
+
+        // Cambiar idioma al seleccionar
+        select.addEventListener("change", e => {
+            updateLanguage(e.target.value);
+        });
+    </script>
 </body>
 </html>
