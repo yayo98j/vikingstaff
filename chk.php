@@ -1,3 +1,8 @@
+<?php
+require __DIR__ . '/auth.php';
+require_login();  // 🚫 si no está logueado, lo manda al login
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
