@@ -414,7 +414,7 @@ require_login(); // 🚫 si no está logueado, redirige a index.php
     
     <!-- Footer -->
     <div class="container text-center mt-4">
-        <small class="text-muted">Checker VIKING STAFF hecho por @Yayo561 y @Morganbennie </small>
+        <small class="text-muted">Checker VIKING STAFF hecho por @Yayo561 , @Morganbennie, @fer889999   </small>
     </div>
 
     <!-- Scripts -->
