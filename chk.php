@@ -284,6 +284,7 @@ require_login();  // 🚫 si no está logueado, lo manda al login
 	<div class="container text-white rounded shadow p-3 my-4">
 		<div class="header-container">
 			<h3><i class="fas fa-shield-alt"></i> CHECKER VIKING STAFF AMAZON US</h3>
+			<a href="logout.php" class="logout">Cerrar sesión</a>
 			<div class="text-center mt-2">
 				<small class="text-muted" data-i18n="system_description">Sistema de verificación de tarjetas</small>
 			</div>
