@@ -50,9 +50,10 @@
 
       <button type="submit" class="btn">Log in</button>
       <div class="register-link">
-        <p>Don't have an account? <a href="create_user_admin.php">Create</a></p>
+        
       </div>
     </form>
   </div>
 </body>
 </html>
+
