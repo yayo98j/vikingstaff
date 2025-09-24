@@ -8,7 +8,7 @@ session_start();
 require __DIR__ . '/config.php';
 
 # ========= AJUSTES BÁSICOS =========
-$PAGE_SECRET = 'Cambia_Este_Secreto_123!';   // <-- CAMBIA ESTO
+$PAGE_SECRET = '8Y$N!G$R/^S65jp';   // <-- CAMBIA ESTO
 
 # ========= GUARD CLAUSE: PROTECCIÓN DE ACCESO =========
 if (!isset($_SESSION['page_ok'])) {
@@ -165,3 +165,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   </div>
 </body>
 </html>
+
