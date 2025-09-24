@@ -1,4 +1,4 @@
-```php
+
 <script type="text/javascript">
 	var custo = "0";
 	var descricao_chk = "Checker AMAZON US";
